@@ -1,0 +1,59 @@
+---
+title: "Refersher"
+author: "Mosa Rahimi"
+date: "Jan 16 2023"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+# L1 
+we can create a headline 
+we can make a text **bold** or *italic*
+options("install.lock" = False)
+
+```{r}
+exp(1)
+
+```
+
+
+```{r}
+library(tidyverse)
+library(plotly)
+
+```
+
+
+```{r}
+
+data("volcano")
+plot_ly(z = volcano, type = "surface")
+
+```
+
+# L2 
+## piping 
+```{r}
+data("mtcars") %>% 
+  select(mtcars$mpg)
+
+```
+
+# L3
+```{r}
+require(babynames)
+glimpse(babynames)
+```
+
+```{r}
+colnames(babynames)
+babynames %>% filter(year == 2015 & sex == "F")
+
+```
+

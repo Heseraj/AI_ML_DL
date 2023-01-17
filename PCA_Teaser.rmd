@@ -1,0 +1,86 @@
+---
+  title: "Principal Component Analysis: Teaser"
+output: 
+  html_document:
+  toc: true
+toc_float: true
+number_sections: true
+code_folding: hide
+editor_options: 
+  chunk_output_type: console
+---
+  
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Packages
+
+```{r}
+require(tidyverse)
+require(plotly)
+
+```
+
+# Business Objective
+
+
+# Data Understanding
+
+
+```{r}
+data("volcano")
+
+
+```
+
+#Visulaization of data 
+
+```{r}
+# the pipe command doesn't work
+plot_ly(z = volcano, type = "surface")
+
+```
+
+# Data Preparation
+
+
+```{r}
+volcano_df <- volcano %>% 
+  as.data.frame() %>% 
+  mutate(y = 1:dim(volcano)[1]) %>% 
+  gather(key = "x", value = "z", 1:61) %>% 
+  mutate(x = gsub(pattern = "V", replacement = "", x = x)) %>% 
+  mutate(x = as.numeric(x))
+
+
+```
+
+# Modeling
+
+```{r}
+volcano_pcd <- prcomp(x = volcano_df, center = TRUE, scale. = TRUE)
+
+```
+
+```{r}
+volcano_principal_components <- data.frame(PC1 = volcano_pcd$x[,1],
+                                           PC2 = volcano_pcd$x[,2],
+                                           PC3 = volcano_pcd$x[,3])
+```
+
+Now we can visualise the result. We will use **ggplot()** for visualisation. But this is not a course on ggplot, so I provide this code directly to you.
+
+```{r}
+g <- ggplot(volcano_principal_components, aes(y = PC1, 
+                                              x = PC2))
+#col = PC3))
+g <- g + scale_color_gradientn(colours = rainbow(5))
+g <- g + scale_y_reverse()
+g <- g + geom_point(alpha = .3)
+g <- g + theme_bw()
+g
+```
+
+
+# Conclusion
